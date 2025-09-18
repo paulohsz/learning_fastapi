@@ -1,0 +1,15 @@
+# Development dependencies for local development and CI
+# Pin versions as needed for your environment. These are left unpinned so you can
+# upgrade selectively; feel free to pin exact versions if you prefer reproducible builds.
+ruff==0.13.0
+pre-commit==4.3.0
+pytest==8.4.2
+
+# Coverage plugin for pytest
+pytest-cov==7.0.0
+
+# Task runner for common development tasks
+taskipy==1.3.0
+
+# Optional typing helpers (uncomment if you use them)
+# types-requests

@@ -1,0 +1,28 @@
+# .gitignore para projeto Python + FastAPI
+
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+# Installer / test cache / coverage
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.mypy_cache/
+.pyre/
+.coverage
+htmlcov/
+.coverage.*
+
+# Ruff
+.ruff_*/
+
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker / compose local overrides
+docker-compose.override.yml

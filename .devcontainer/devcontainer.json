@@ -1,0 +1,33 @@
+{
+    "name": "FastAPI Dev Container",
+    "dockerComposeFile": [
+        "docker-compose.yml"
+    ],
+    "service": "fastapi-app",
+    "workspaceFolder": "/app",
+    "shutdownAction": "stopCompose",
+    "remoteUser": "root",
+    "postCreateCommand": "pip3 install -r /app/requirements.txt",
+    "forwardPorts": [8070],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.pylint",
+                "ms-python.black-formatter",
+                "ms-python.vscode-pylance"
+            ],
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/bin/python3",
+                "python.linting.enabled": true,
+                "python.formatting.provider": "black",
+                "python.analysis.extraPaths": [
+                    "/usr/local/lib/python3.13/site-packages",
+                    "/usr/local/lib/python3.13/dist-packages",
+                    "/usr/lib/python3/dist-packages"
+                ],
+                "python.analysis.typeCheckingMode": "basic"
+            }
+        }
+    }
+}

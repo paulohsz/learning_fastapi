@@ -1,0 +1,16 @@
+services:
+  fastapi-app:
+    build:
+      context: .
+      # To build an image that includes development dependencies, set build args:
+      #   docker-compose build --build-arg INSTALL_DEV=true
+      # or set the environment variable in an overridden compose file.
+      args:
+        INSTALL_DEV: "false"
+    ports:
+      - "8070:8070"
+    volumes:
+      - .:/app:cached
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONDONTWRITEBYTECODE=1

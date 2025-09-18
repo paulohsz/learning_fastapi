@@ -1,0 +1,55 @@
+[tool.ruff]
+line-length = 80
+exclude = [".git", "__pycache__", "build", "dist", "venv", "env", ".venv"]
+
+[tool.ruff.lint]
+preview = true
+extend-select = ["E", "F", "W", "I", "S", "PL", "PT"]
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
+
+[tool.ruff.per-file-ignores]
+"tests/**/*.py" = [
+    # at least this three should be fine in tests:
+    "S101", # asserts allowed in tests...
+    "ARG", # Unused function args -> fixtures nevertheless are functionally relevant...
+    "FBT", # Don't care about booleans as positional arguments in tests, e.g. via @pytest.mark.parametrize()
+    # The below are debateable
+    "PLR2004", # Magic value used in comparison, ...
+    "S311", # Standard pseudo-random generators are not suitable for cryptographic purposes
+]
+
+# Optional: enable specific rules or ignore some noisy ones
+# For example, to ignore line-too-long for generated files, add to ignore
+# ignore = ["E501"]
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = "-p no:warnings"
+
+[tool.taskipy.tasks]
+# Lint project with ruff (check only)
+lint = "ruff check ."
+# Auto-fix lint/format issues where possible
+lint-fix = "ruff check --fix ."
+# Run ruff formatter explicitly
+pre_format = 'task lint-fix'
+format = "ruff format ."
+# Run black and isort (formatting)
+fmt = "isort . && black ."
+# Install pre-commit hooks
+pre-commit-install = "pre-commit install"
+# Run tests
+pre_test = "task lint"
+test = "pytest -s -x --cov=app -vv"
+post_test = "task coverage"
+# Run tests with coverage report
+coverage = "pytest --cov=app --cov-report=term-missing"
+# Start uvicorn for development (assuming app.main:app)
+start = "uvicorn app.main:app --reload --host 0.0.0.0 --port 8070"
+# Start a dev server with live reload (alias)
+dev = "task start"
+# Clean python artifacts
+clean = "find . -type d -name '__pycache__' -prune -exec rm -rf '{}' +; find . -name '*.pyc' -delete"
