@@ -1,11 +1,13 @@
 from fastapi import FastAPI
 
+from app.schemas import Message
+
 app = FastAPI()
 
 
-@app.get('/')
+@app.get('/', response_model=Message)
 async def read_root():
-    return {'Hello': 'World'}
+    return {'message': 'Hello World 33'}
 
 
 @app.get('/items/{item_id}')

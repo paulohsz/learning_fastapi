@@ -69,4 +69,4 @@ COPY . .
 EXPOSE 8070
 
 # Command to run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8070"]
+CMD ["sh", "-c", "if [ \"$INSTALL_DEV\" = \"true\" ]; then uvicorn app.main:app --host 0.0.0.0 --port 8070 --reload; else uvicorn app.main:app --host 0.0.0.0 --port 8070; fi"]

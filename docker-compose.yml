@@ -14,3 +14,11 @@ services:
     environment:
       - PYTHONPATH=/app
       - PYTHONDONTWRITEBYTECODE=1
+
+
+# Example to override
+# services:
+#   # Replace 'fastapi-app' with the actual service name from your docker-compose.yml
+#   fastapi-app:
+#     environment:
+#       - INSTALL_DEV=true
