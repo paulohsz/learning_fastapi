@@ -68,5 +68,12 @@ COPY . .
 # Expose port 8070
 EXPOSE 8070
 
-# Command to run the application
-CMD ["sh", "-c", "if [ \"$INSTALL_DEV\" = \"true\" ]; then uvicorn app.main:app --host 0.0.0.0 --port 8070 --reload; else uvicorn app.main:app --host 0.0.0.0 --port 8070; fi"]
+# Create an entrypoint script to run the application with proper signal handling
+# Using an entrypoint script ensures signals are forwarded correctly and uvicorn runs as PID 1
+RUN printf '%s\n' "#!/bin/sh" "set -e" "if [ \"\$INSTALL_DEV\" = \"true\" ]; then" \
+    "  exec uvicorn app.main:app --host 0.0.0.0 --port 8070 --reload" \
+    "else" \
+    "  exec uvicorn app.main:app --host 0.0.0.0 --port 8070" \
+    "fi" > /usr/local/bin/entrypoint.sh && chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
