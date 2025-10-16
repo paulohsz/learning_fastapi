@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr, Field, SecretStr
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 
 class Message(BaseModel):
@@ -10,7 +10,8 @@ class Message(BaseModel):
 class UserSchema(BaseModel):
     username: str
     email: EmailStr
-    password: SecretStr
+    password: str
+    model_config = ConfigDict(from_attributes=True)
 
 
 class UserDB(UserSchema):
@@ -18,7 +19,7 @@ class UserDB(UserSchema):
 
 
 class UserPublic(UserDB):
-    password: Optional[SecretStr] = Field(None, exclude=True)
+    password: Optional[str] = Field(None, exclude=True)
 
 
 class UserList(BaseModel):
